@@ -22,8 +22,11 @@ var curseforge = {
         var data = await utils.get(plugin.dUrl)
         var $ = cheerio.load(data)
         var url = $('.download__link').attr('href')
-        var fileName = plugin.n + plugin.v
-        await utils.getFile(curseforgeUrl + url, fileName)
+        var fileName = plugin.n + '.zip'
+        return await utils.getFile(curseforgeUrl + url, fileName)
+    },
+    unzip: async function(src, dest) {
+        await utils.unzip(src, dest)
     }
 }
 

@@ -5,7 +5,7 @@ const electron = require('electron')
 var userDataPath = (electron.app || electron.remote.app).getPath('userData')
 var request = require("request")
 var path = require("path")
-var unzip = require("unzip")
+var DecompressZip = require('decompress-zip')
 
 var httpsUtils = {
     _get: function (url) {
@@ -40,7 +40,7 @@ var httpsUtils = {
         return _path
     },
 
-    unzip: async function(src, dest) {
+    unzip: async function (src, dest) {
         await _unzip(src, dest)
     }
 
@@ -48,19 +48,33 @@ var httpsUtils = {
 
 function _unzip(src, dest) {
     return new Promise(function (resolve, reject) {
-        var extract = unzip.Extract({
-            path: dest
-        })
-        extract.on('error', function (err) {
-            console.log("error++++++++++++++++++++++")
-            console.log(err)
-            //解压异常处理
+
+        var unzipper = new DecompressZip(src)
+
+        unzipper.on('error', function (err) {
+            console.log('Caught an error', err);
         });
-        extract.on('finish', function () {
-            console.log("解压完成!!")
+
+        // Notify when everything is extracted
+        unzipper.on('extract', function (log) {
+            console.log('Finished extracting', log);
             resolve()
         });
-        fs.createReadStream(src).pipe(extract)
+
+        // Notify "progress" of the decompressed files
+        unzipper.on('progress', function (fileIndex, fileCount) {
+            console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+        });
+
+        // Start extraction of the content
+        unzipper.extract({
+            path: dest
+            // You can filter the files that you want to unpack using the filter option
+            //filter: function (file) {
+            //console.log(file);
+            //return file.type !== "SymbolicLink";
+            //}
+        });
     })
 }
 

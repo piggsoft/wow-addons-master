@@ -23,6 +23,14 @@ var PluginUtils = {
             case pluginType[0]:
                 return await curseforge.downloadPlugin(plugin)
         }
+    },
+
+    unzip: async function (plugin) {
+        var type = plugin.type
+        switch (type) {
+            case pluginType[0]:
+                return await curseforge.unzip(src, dest)
+        }
     }
 }
 
