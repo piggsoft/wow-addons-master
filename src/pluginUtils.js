@@ -25,7 +25,7 @@ var PluginUtils = {
         }
     },
 
-    unzip: async function (plugin) {
+    unzip: async function (plugin, src, dest) {
         var type = plugin.type
         switch (type) {
             case pluginType[0]:

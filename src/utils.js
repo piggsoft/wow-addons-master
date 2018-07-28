@@ -57,13 +57,13 @@ function _unzip(src, dest) {
 
         // Notify when everything is extracted
         unzipper.on('extract', function (log) {
-            console.log('Finished extracting', log);
+            //console.log('Finished extracting', log);
             resolve()
         });
 
         // Notify "progress" of the decompressed files
         unzipper.on('progress', function (fileIndex, fileCount) {
-            console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+            //console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
         });
 
         // Start extraction of the content

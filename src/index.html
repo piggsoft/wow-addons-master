@@ -29,12 +29,28 @@
           <button id="addPlugin" class="btn btn-primary">确定添加</button>
         </div>
       </div>
+      <div class="form-group row justify-content-end">
+        <div class="col-sm-2">
+          <button id="updateAllPlugin" class="btn btn-primary">更新所有插件</button>
+        </div>
+      </div>
     </form>
   </header>
   <div class="clear"></div>
   <div class="container-fluid">
     <!-- Content here -->
-    
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">名称</th>
+          <th scope="col">版本</th>
+          <th scope="col">最新更新时间</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </div>
 </body>
 <script src="render.js"></script>
