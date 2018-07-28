@@ -21,13 +21,25 @@ console.log((electron.app || electron.remote.app).getPath('userData'))
 
 $(function() {
     $('#wowPath').val(store.get(wowPathKey))
+    refreshTable();
+})
+
+function refreshTable() {
+    $("table tbody").html('')
     var size = plugins.length
     var _str = '';
     for (var i=0; i<size; i++) {
         _str += fillTd(plugins[i])
     }
     $("table tbody").append(_str);
-})
+
+    $('.del').on('click', function () {
+        var name = $(this).parent().parent().children().first().text()
+        pluginUtils.removePlugin(plugins, name)
+        store.set(pluginKey, plugins)
+        refreshTable()
+    })
+}
 
 function fillTd(plugin) {
     return `<tr>
@@ -36,7 +48,7 @@ function fillTd(plugin) {
     <td>${plugin.t}</td>
     <td>
         <button class="btn btn-success">更新</button>
-        <button class="btn btn-danger">删除</button>
+        <button class="btn btn-danger del">删除</button>
     </td>
     </tr>`
 }
@@ -65,12 +77,44 @@ $("#addPlugin").on('click', function () {
     parse(url)
 })
 
+
+
+$('#updateAllPlugin').on('click', function() {
+    var size = plugins.length
+    for (var i=0; i<size; i++) {
+        updateAll()
+    }
+})
+
+async function updateAll() {
+    $('body').showLoading();
+    var size = plugins.length
+    var _plugins = []
+    for (var i=0; i<size; i++) {
+        var _plugin = plugins[i]
+        var plugin = await pluginUtils.parsePlugin(_plugin.u)
+        if (plugin.t > _plugin.t) {
+            var file = await pluginUtils.downloadPlugin(plugin)
+            await pluginUtils.unzip(plugin, file, store.get(wowPathKey) + wowPathSub)
+            _plugins.push(plugin)
+        } else {
+            _plugins.push(_plugin)
+        }
+    }
+    plugins = _plugins
+    store.set(pluginKey, plugins)
+    $('body').hideLoading();
+    refreshTable();
+}
+
+
 async function parse(url) {
     $('body').showLoading();
     var plugin = await pluginUtils.parsePlugin(url)
     var file = await pluginUtils.downloadPlugin(plugin)
     await pluginUtils.unzip(plugin, file, store.get(wowPathKey) + wowPathSub)
-    plugins.push(plugin)
+    pluginUtils.addPlugin(plugins, plugin)
     store.set(pluginKey, plugins)
     $('body').hideLoading();
+    refreshTable();
 }
