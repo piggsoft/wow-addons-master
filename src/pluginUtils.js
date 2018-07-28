@@ -9,21 +9,19 @@ var PluginUtils = {
         return 'unknow'
     },
 
-    parsePlugin: function (url, callback) {
+    parsePlugin: async function (url) {
         var type = this.checkType(url);
         switch (type) {
             case pluginType[0]:
-                curseforge.getPluginInfo(url, callback)
-                break;
+                return await curseforge.getPluginInfo(url)
         }
     },
 
-    downloadPlugin: function (plugin, callback) {
+    downloadPlugin: async function (plugin) {
         var type = plugin.type
         switch (type) {
             case pluginType[0]:
-                curseforge.downloadPlugin(plugin, callback)
-                break
+                return await curseforge.downloadPlugin(plugin)
         }
     }
 }
