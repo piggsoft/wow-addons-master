@@ -1,6 +1,6 @@
 {
-  "name": "wow-addons-master",
-  "productName": "wow-addons-master",
+  "name": "wam",
+  "productName": "wam",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/main.js",
@@ -21,7 +21,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "wow_addons_master"
+            "name": "wam"
           }
         },
         {
@@ -51,7 +51,8 @@
     "jquery": "^3.3.1",
     "jquery.showloading": "^1.0.0",
     "nconf": "^0.10.0",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "request": "^2.87.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.26",
@@ -59,6 +60,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.26",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.26",
     "@electron-forge/maker-zip": "^6.0.0-beta.26",
-    "electron": "2.0.5"
+    "electron": "2.0.5",
+    "grunt-electron-installer": "^2.1.0"
   }
 }
