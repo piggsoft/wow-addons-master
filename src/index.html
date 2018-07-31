@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <header class="container-fluid">
+  <header class="container-fluid" style="margin-top: 10px;">
     <form action="javascript:;">
       <div class="form-group row">
         <label for="inputPath" class="col-sm-2 col-form-label">当前路径:</label>
@@ -17,7 +17,7 @@
           <input id='wowPath' type="text" disabled class="form-control" id="inputPath">
         </div>
         <div class="col-sm-2">
-          <button id="wowPathBtn" class="btn btn-primary">WoW路径</button>
+          <button id="wowPathBtn" class="btn btn-success">魔兽路径</button>
         </div>
       </div>
       <div class="form-group row">
@@ -26,12 +26,13 @@
           <input type="text" class="form-control" id="inputPlugin" placeholder="https://www.curseforge.com/wow/addons/deadly-boss-mods">
         </div>
         <div class="col-sm-2">
-          <button id="addPlugin" class="btn btn-primary">确定添加</button>
+          <button id="addPlugin" class="btn btn-danger">确定添加</button>
         </div>
       </div>
-      <div class="form-group row justify-content-end">
+      <div class="form-group row justify-content-center">
         <div class="col-sm-2">
-          <button id="updateAllPlugin" class="btn btn-primary">更新所有插件</button>
+            <button id="updateAllPlugin" class="btn btn-info">全部检查</button>
+          <button id="updateAllPlugin" class="btn btn-warning">全部更新</button>
         </div>
       </div>
     </form>
