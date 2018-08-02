@@ -1,0 +1,10 @@
+input::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: #999 !important;
+    font-weight: inherit !important;
+}
+
+#inputPlugin {
+    font-weight: bold;
+    color: red;
+}
