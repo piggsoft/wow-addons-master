@@ -8,6 +8,7 @@ window.$ = window.jQuery = require('jquery')
 require('bootstrap')
 require('popper.js')
 require('jquery.showloading')
+const moment = require('moment')
 
 const wowPathSub = '/interface/addons'
 const wowPathKey = 'wowPath';
@@ -42,10 +43,11 @@ function refreshTable() {
 }
 
 function fillTd(plugin) {
+    var _t = moment(new Date(plugin.t)).format("YYYY-MM-DD")
     return `<tr>
     <td>${plugin.n}</td>
     <td>${plugin.v}</td>
-    <td>${plugin.t}</td>
+    <td>${_t}</td>
     <td>
         <button class="btn btn-success">更新</button>
         <button class="btn btn-danger del">删除</button>
