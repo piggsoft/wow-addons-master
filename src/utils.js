@@ -6,6 +6,7 @@ var userDataPath = (electron.app || electron.remote.app).getPath('userData')
 var request = require("request")
 var path = require("path")
 var DecompressZip = require('decompress-zip')
+const addonDir = "addons"
 
 var httpsUtils = {
     _get: function (url) {
@@ -79,8 +80,11 @@ function _unzip(src, dest) {
 }
 
 function dowloadFile(url, fileName) {
-
-    var _path = path.join(userDataPath, fileName)
+    var dir = path.join(userDataPath, addonDir)
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir)
+    }
+    var _path = path.join(dir, fileName)
     let stream = fs.createWriteStream(_path)
     return new Promise(function (resolve, reject) {
         request(url).pipe(stream).on('close', function () {

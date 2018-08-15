@@ -10,6 +10,8 @@ require('popper.js')
 require('jquery.showloading')
 const moment = require('moment')
 
+const defaultPlugins = require('./defaultPlugins')
+
 const wowPathSub = '/interface/addons'
 const wowPathKey = 'wowPath';
 const pluginKey = 'plugins'
@@ -79,6 +81,16 @@ $("#addPlugin").on('click', function () {
     parse(url)
 })
 
+$("#addDefault").on('click', function () {
+    addDefault()
+})
+
+async function addDefault() {
+    for(var i=0; i<defaultPlugins.length; i++) {
+        await parse(defaultPlugins[i])
+    }
+}
+
 
 
 $('#updateAllPlugin').on('click', function() {
@@ -97,7 +109,7 @@ async function updateAll() {
         var plugin = await pluginUtils.parsePlugin(_plugin.u)
         if (plugin.t > _plugin.t) {
             var file = await pluginUtils.downloadPlugin(plugin)
-            await pluginUtils.unzip(plugin, file, store.get(wowPathKey) + wowPathSub)
+            await pluginUtils.unzip(plugin, file, wowPath())
             _plugins.push(plugin)
         } else {
             _plugins.push(_plugin)
@@ -105,8 +117,8 @@ async function updateAll() {
     }
     plugins = _plugins
     store.set(pluginKey, plugins)
-    $('body').hideLoading();
-    refreshTable();
+    $('body').hideLoading()
+    refreshTable()
 }
 
 
@@ -114,9 +126,13 @@ async function parse(url) {
     $('body').showLoading();
     var plugin = await pluginUtils.parsePlugin(url)
     var file = await pluginUtils.downloadPlugin(plugin)
-    await pluginUtils.unzip(plugin, file, store.get(wowPathKey) + wowPathSub)
+    await pluginUtils.unzip(plugin, file, wowPath())
     pluginUtils.addPlugin(plugins, plugin)
     store.set(pluginKey, plugins)
     $('body').hideLoading();
     refreshTable();
+}
+
+function wowPath() {
+    return store.get(wowPathKey) + wowPathSub
 }
